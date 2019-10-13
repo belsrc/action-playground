@@ -3,7 +3,7 @@ name: build
 on: [pull_request, push]
 
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -15,11 +15,30 @@ jobs:
         run: npm ci
       - name: Run Linter
         run: npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - name: Install Packages
+        run: npm ci
       - name: Run Unit Tests
         run: npm run test:cov
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.2
+
+  build:
+    needs: [test, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
-          token: ${{secrets.CODECOV_TOKEN}}
+          node-version: 10
+      - name: Install Packages
+        run: npm ci
       - name: Run Build
         run: npm run build
