@@ -1,8 +1,14 @@
 name: publish
 
+# Trigger the publish on tag pushes
+# You can also use
+#  release:
+#    types: [published]
+# But this requires you to manual make a new release from Github
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - v*
 
 jobs:
   # Run ESLint over the code base
