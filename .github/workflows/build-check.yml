@@ -1,8 +1,15 @@
 name: build-check
 
 on:
+  # trigger on PRs.
+  # `opened` is when the PR is opend
+  # `synchronize` is when and additional push to a PR is made
   pull_request:
     types: [opened, synchronize]
+
+  # trigger on branch push
+  # only trigger on pushes to the `master` and `develop` branches (this also means PR merges)
+  # we can also ignore them if they only contain documentation changes
   push:
     branches:
       - master
