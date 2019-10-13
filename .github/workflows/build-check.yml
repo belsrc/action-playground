@@ -1,6 +1,12 @@
-name: build
+name: build-check
 
-on: [pull_request, push]
+on:
+  pull_request:
+    types: [open]
+  push:
+    paths-ignore:
+    - 'docs/**'
+    - '**.md'
 
 jobs:
   lint:
