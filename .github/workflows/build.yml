@@ -1,0 +1,25 @@
+name: build
+
+on: [pull_request, push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - name: Install Packages
+        run: npm ci
+      - name: Run Linter
+        run: npm run lint
+      - name: Run Unit Tests
+        run: npm run test:cov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+      - name: Run Build
+        run: npm run build

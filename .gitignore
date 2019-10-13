@@ -1,0 +1,61 @@
+# Linux
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+Desktop.ini
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Sublime
+*.sublime-workspace
+*.sublime-project
+
+# VS Code
+.vscode
+
+# Package Manager Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Instrumented Code Folders
+/lib-cov
+/app-cov
+/coverage
+
+# Node
+/node_modules
+.env
+.grunt
+.sass-cache
+.yarn-integrity
+.node_repl_history
+.eslintcache
+.npm
+
+# no zip files
+*.zip
+
+# Project Specific
+.ignore/
+.nyc_output/
+coverage.lcov
+docs/
+test-comp
+/dist/*
