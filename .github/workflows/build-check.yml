@@ -3,7 +3,7 @@ name: build-check
 on:
   # trigger on PRs.
   # `opened` is when the PR is opend
-  # `synchronize` is when and additional push to a PR is made
+  # `synchronize` is when any additional pushes are made to the PR
   pull_request:
     types: [opened, synchronize]
 
@@ -19,6 +19,8 @@ on:
       - '**.md'
 
 jobs:
+  # If the job does NOT have any `needs` jobs, then they are ran in parallel
+  # Run ESLint over the code base
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -32,6 +34,7 @@ jobs:
       - name: Run Linter
         run: npm run lint
 
+  # Run all of the unit tests
   test:
     runs-on: ubuntu-latest
     steps:
@@ -45,6 +48,8 @@ jobs:
       - name: Run Unit Tests
         run: npm run test:cov
 
+  # If `lint` and `test` pass (this is the `needs` line)
+  # then check the actual compiling
   build:
     needs: [test, lint]
     runs-on: ubuntu-latest
