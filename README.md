@@ -1,6 +1,6 @@
 # Play around with Github actions
 
-##### General Safety Checks
+#### General Safety Checks
 ```yml
 name: build-check
 
@@ -69,7 +69,7 @@ jobs:
         run: npm run build
 ```
 
-##### Publish on New Tags
+#### Publish on New Tags
 ```yml
 name: publish
 
@@ -163,4 +163,12 @@ jobs:
 #      - run: npm publish
 #        env:
 #          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+```
+
+#### Addition to Test Job for CodeCov Reports
+```yml
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
 ```
