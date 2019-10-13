@@ -2,11 +2,14 @@ name: build-check
 
 on:
   pull_request:
-    types: [open]
+    types: [opened, edited]
   push:
+    branches:
+      - master
+      - develop
     paths-ignore:
-    - 'docs/**'
-    - '**.md'
+      - 'docs/**'
+      - '**.md'
 
 jobs:
   lint:
