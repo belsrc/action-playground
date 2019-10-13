@@ -47,6 +47,10 @@ jobs:
         run: npm ci
       - name: Run Unit Tests
         run: npm run test:cov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
 
   # If `lint` and `test` pass (this is the `needs` line)
   # then check the actual compiling
