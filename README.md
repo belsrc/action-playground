@@ -172,3 +172,16 @@ jobs:
         with:
           token: ${{secrets.CODECOV_TOKEN}}
 ```
+
+#### Addition to Test Job for CodeClimate coverage Reports
+```yml
+      - name: Upload coverage to CodeClimate
+        run: |
+          export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter format-coverage -t lcov coverage/lcov.info
+          ./cc-test-reporter upload-coverage
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+```
