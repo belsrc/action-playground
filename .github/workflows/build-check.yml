@@ -51,6 +51,12 @@ jobs:
         uses: codecov/codecov-action@v1.0.2
         with:
           token: ${{secrets.CODECOV_TOKEN}}
+      - name: Test & Upload coverage to CodeClimate
+        uses: paambaati/codeclimate-action@v2.2.1
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+        with:
+          coverageCommand: npm run test:cov
 
   # If `lint` and `test` pass (this is the `needs` line)
   # then check the actual compiling

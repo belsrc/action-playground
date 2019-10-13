@@ -1,0 +1,29 @@
+version: '2'
+plugins:
+  fixme:
+    enabled: true
+    config:
+      strings:
+      - DEBUG
+      - HACK
+      - TODO
+      - FIXME
+  duplication:
+    enabled: true
+    checks:
+      Similar code:
+        enabled: false
+  nodesecurity:
+    enabled: true
+  eslint:
+    enabled: true
+    channel: 'eslint-5'
+    config:
+      config: .eslintrc.js
+      extensions:
+        - .js
+exclude_patterns:
+  - '**/node_modules/'
+  - '**/__tests__/*'
+  - '**/__mocks__/*'
+  - '**/*.test.js"'
