@@ -1,6 +1,6 @@
 # Play around with Github actions
 [![Build Status](https://github.com/belsrc/js-project-template/workflows/build-check/badge.svg)](https://github.com/belsrc/js-project-template/actions)
-[![Maintainability](https://img.shields.io/codeclimate/maintainability/belsrc/js-project-template.svg?logo=code%20climate&logoWidth=14&style=flat-square)](https://codeclimate.com/github/belsrc/js-project-template/maintainability)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/belsrc/action-playground.svg?logo=code%20climate&logoWidth=14&style=flat-square)](https://codeclimate.com/github/belsrc/action-playground/maintainability)
 [![Code Coverage](https://img.shields.io/codeclimate/coverage/belsrc/action-playground?logo=code%20climate&style=flat-square)](https://codeclimate.com/github/belsrc/action-playground/test_coverage)
 
 #### General Safety Checks
