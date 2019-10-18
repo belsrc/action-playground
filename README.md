@@ -1,4 +1,7 @@
 # Play around with Github actions
+[![Build Status](https://github.com/belsrc/js-project-template/workflows/build-check/badge.svg)](https://github.com/belsrc/js-project-template/actions)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/belsrc/js-project-template.svg?logo=code%20climate&logoWidth=14&style=flat-square)](https://codeclimate.com/github/belsrc/js-project-template/maintainability)
+[![Code Coverage](https://img.shields.io/codeclimate/coverage/belsrc/action-playground?logo=code%20climate&style=flat-square)](https://codeclimate.com/github/belsrc/action-playground/test_coverage)
 
 #### General Safety Checks
 ```yml
@@ -88,7 +91,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Git Checkout
+        uses: actions/checkout@v1
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -102,7 +106,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Git Checkout
+        uses: actions/checkout@v1
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -112,25 +117,9 @@ jobs:
       - name: Run Unit Tests
         run: npm run test:cov
 
-  # If `lint` and `test` pass (this is the `needs` line)
-  # then check the actual compiling
-  build:
-    needs: [test, lint]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10
-      - name: Install Packages
-        run: npm ci
-      - name: Run Build
-        run: npm run build
-
-  # If `build` passes, publish to Github Pkg Reg
+  # If `lint` and `test` pass, build and publish to Github Pkg Reg
   publish-gpr:
-    needs: build
+    needs: [test, lint]
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
@@ -141,28 +130,34 @@ jobs:
           node-version: 10
           registry-url: https://npm.pkg.github.com/
           scope: '@belsrc'
+      - name: Install Packages
+        run: npm ci
+      - name: Run Build
+        run: npm run build
       - name: Publish Package @ Github
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-  # If `build` passes, publish to NPM Pkg Reg
-#  publish-npm:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Git Checkout
-#        uses: actions/checkout@v1
-#      - name: Setup Node
-#        uses: actions/setup-node@v1
-#        with:
-#          node-version: 10
-#          registry-url: https://registry.npmjs.org/
-#          scope: '@belsrc'
-#      - run: npm ci
-#      - run: npm publish
-#        env:
-#          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+  # # If `lint` and `test` pass, build and publish to NPM Pkg Reg
+  # publish-npm:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Git Checkout
+  #       uses: actions/checkout@v1
+  #     - name: Setup Node
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 10
+  #         registry-url: https://registry.npmjs.org/
+  #         scope: '@belsrc'
+  #     - run: npm ci
+  #     - name: Publish Package @ NPM
+  #       run: npm publish
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
 ```
 
 #### Addition to Test Job for CodeCov Reports
