@@ -24,7 +24,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Git Checkout
+        uses: actions/checkout@v1
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -38,7 +39,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Git Checkout
+        uses: actions/checkout@v1
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
@@ -47,10 +49,6 @@ jobs:
         run: npm ci
       - name: Run Unit Tests
         run: npm run test:cov
-#      - name: Upload coverage to Codecov
-#        uses: codecov/codecov-action@v1.0.2
-#        with:
-#          token: ${{secrets.CODECOV_TOKEN}}
       - name: Upload coverage to CodeClimate
         run: |
           export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
@@ -67,7 +65,8 @@ jobs:
     needs: [test, lint]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Git Checkout
+        uses: actions/checkout@v1
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
