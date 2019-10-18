@@ -47,10 +47,10 @@ jobs:
         run: npm ci
       - name: Run Unit Tests
         run: npm run test:cov
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.2
-        with:
-          token: ${{secrets.CODECOV_TOKEN}}
+#      - name: Upload coverage to Codecov
+#        uses: codecov/codecov-action@v1.0.2
+#        with:
+#          token: ${{secrets.CODECOV_TOKEN}}
       - name: Upload coverage to CodeClimate
         run: |
           export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
