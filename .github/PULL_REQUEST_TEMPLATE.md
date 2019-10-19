@@ -6,6 +6,7 @@ If it fixes a bug or resolves a feature request, be sure to link to that issue.
 ## Pull request checklist
 
 Before you submit a pull request, please make sure you have to following:
+
 - [ ] Tests for the relevant changes have been added
 - [ ] All new and existing tests passed
 - [ ] Linting check passed
@@ -15,6 +16,7 @@ Before you submit a pull request, please make sure you have to following:
 ## Pull request type
 
 Please check the type of change your PR introduces:
+
 - [ ] Bugfix
 - [ ] Feature
 - [ ] Refactoring (no functional changes, no api changes)
@@ -23,6 +25,7 @@ Please check the type of change your PR introduces:
 - [ ] Other (please describe):
 
 ## Does this introduce a breaking change?
+
 - [ ] Yes
 - [ ] No
 

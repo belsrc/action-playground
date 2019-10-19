@@ -16,8 +16,8 @@
   "scripts": {
     "precommithook": "npm-run-all clean test:changed-silent",
     "check": "npm-check -u",
-    "lint": "npx eslint -c .eslintrc.js --fix --color --ignore-path .eslintignore \"src/**/*.js\"",
-    "prettier": "npx prettier --config .prettierrc.js --write \"src/**/*.js\"",
+    "lint": "npx eslint -c .eslintrc.js --fix --color --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx}\"",
+    "prettier": "npx prettier --config .prettierrc.js --write \"**/*.{js,jsx,ts,tsx,md,html}\"",
     "clean": "npm-run-all prettier lint",
     "test": "cross-env NODE_ENV=test jest src/ --verbose --passWithNoTests",
     "test:changed": "cross-env NODE_ENV=test jest src/ -o --passWithNoTests",

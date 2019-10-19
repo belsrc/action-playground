@@ -1,9 +1,11 @@
 # Play around with Github actions
+
 [![Build Status](https://github.com/belsrc/action-playground/workflows/build-check/badge.svg)](https://github.com/belsrc/action-playground/actions)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/belsrc/action-playground.svg?logo=code%20climate&logoWidth=14&style=flat-square)](https://codeclimate.com/github/belsrc/action-playground/maintainability)
 [![Code Coverage](https://img.shields.io/codeclimate/coverage/belsrc/action-playground?logo=code%20climate&style=flat-square)](https://codeclimate.com/github/belsrc/action-playground/test_coverage)
 
 #### General Safety Checks
+
 ```yml
 name: build-check
 
@@ -73,6 +75,7 @@ jobs:
 ```
 
 #### Publish on New Tags
+
 ```yml
 name: publish
 
@@ -138,7 +141,6 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
   # # If `lint` and `test` pass, build and publish to NPM Pkg Reg
   # publish-npm:
   #   needs: build
@@ -157,26 +159,27 @@ jobs:
   #       run: npm publish
   #       env:
   #         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
 ```
 
 #### Addition to Test Job for CodeCov Reports
+
 ```yml
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.2
-        with:
-          token: ${{secrets.CODECOV_TOKEN}}
+- name: Upload coverage to Codecov
+  uses: codecov/codecov-action@v1.0.2
+  with:
+    token: ${{secrets.CODECOV_TOKEN}}
 ```
 
 #### Addition to Test Job for CodeClimate coverage Reports
+
 ```yml
-      - name: Upload coverage to CodeClimate
-        run: |
-          export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter format-coverage -t lcov coverage/lcov.info
-          ./cc-test-reporter upload-coverage
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+- name: Upload coverage to CodeClimate
+  run: |
+    export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
+    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    chmod +x ./cc-test-reporter
+    ./cc-test-reporter format-coverage -t lcov coverage/lcov.info
+    ./cc-test-reporter upload-coverage
+  env:
+    CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
 ```
