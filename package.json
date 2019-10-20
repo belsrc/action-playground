@@ -47,7 +47,7 @@
   "keywords": [],
   "devDependencies": {
     "@babel/cli": "7.6.2",
-    "@babel/core": "7.6.2",
+    "@babel/core": "7.6.4",
     "@babel/preset-env": "7.6.2",
     "@babel/register": "7.6.2",
     "@commitlint/cli": "8.2.0",
