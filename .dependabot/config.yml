@@ -6,5 +6,5 @@ update_configs:
     update_schedule: "weekly"
     target_branch: "master"
     commit_message:
-      prefix: "chore"
+      prefix: "build"
       include_scope: true
