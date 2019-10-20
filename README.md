@@ -200,3 +200,23 @@ For Yarn you will need to use an Action from the marketplace, Borales/actions-ya
 ```
 
 Though, admittedly, I've found it easier to just use npm for most of the actions.
+
+**Edit:** It's actually easier, will less odd behavior, to just use a kind of hybrid (explicit) approach instead of above Yarn action.
+
+```yml
+lint:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Git Checkout
+      uses: actions/checkout@v1
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10
+    - name: Install Yarn
+      run: npm i -g yarn
+    - name: Install Packages
+      run: yarn install
+    - name: Run Linter
+      run: yarn run lint
+```
