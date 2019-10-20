@@ -26,14 +26,21 @@ jobs:
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10
+#      - name: Setup Node
+#        uses: actions/setup-node@v1
+#        with:
+#          node-version: 10
+#      - name: Install Packages
+#        run: npm i --no-audit --no-package-lock --no-optional
       - name: Install Packages
-        run: npm i --no-audit --no-package-lock --no-optional
+        uses: Borales/actions-yarn@v2.0.1
+        with:
+          cmd: install
       - name: Run Linter
-        run: npm run lint
+#        run: npm run lint
+        uses: Borales/actions-yarn@v2.0.1
+        with:
+          cmd: run lint
 
   # Run all of the unit tests
   test:
