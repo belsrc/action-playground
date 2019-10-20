@@ -145,7 +145,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   # # If `lint` and `test` pass, build and publish to NPM Pkg Reg
   # publish-npm:
   #   needs: build
