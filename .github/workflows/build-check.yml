@@ -30,10 +30,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10
+      - name: Install Yarn
+        run: npm i -g yarn
       - name: Install Packages
-        run: npm i --no-audit --no-package-lock --no-optional
+        run: yarn install
       - name: Run Linter
-        run: npm run lint
+        run: yarn run lint
 
   # Run all of the unit tests
   test:
@@ -45,10 +47,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10
+      - name: Install Yarn
+        run: npm i -g yarn
       - name: Install Packages
-        run: npm i --no-audit --no-package-lock --no-optional
+        run: yarn install
       - name: Run Unit Tests
-        run: npm run coverage
+        run: yarn run coverage
       - name: Upload coverage to CodeClimate
         run: |
           export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
@@ -71,9 +75,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10
-          registry-url: https://npm.pkg.github.com/
-          scope: '@belsrc'
+      - name: Install Yarn
+        run: npm i -g yarn
       - name: Install Packages
-        run: npm i --no-audit --no-package-lock --no-optional
+        run: yarn install
       - name: Run Build
-        run: npm run build
+        run: yarn run build
