@@ -31,7 +31,9 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm ci
+        uses: Borales/actions-yarn@v2.0.1
+        with:
+          cmd: install
       - name: Run Linter
         run: npm run lint
 

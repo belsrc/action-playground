@@ -16,14 +16,13 @@
   "scripts": {
     "precommithook": "npm-run-all clean test:changed-silent",
     "check": "npm-check -u",
+    "clean": "npm-run-all prettier lint",
     "lint": "npx eslint -c .eslintrc.js --fix --color --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx}\"",
     "prettier": "npx prettier --config .prettierrc.js --write \"**/*.{js,jsx,ts,tsx,md,html}\"",
-    "clean": "npm-run-all prettier lint",
     "test": "cross-env NODE_ENV=test jest src/ --verbose --passWithNoTests",
     "test:changed": "cross-env NODE_ENV=test jest src/ -o --passWithNoTests",
     "test:changed-silent": "cross-env NODE_ENV=test jest src/ -o --silent --passWithNoTests",
     "test:cov": "cross-env NODE_ENV=test jest src/ --verbose --coverage --passWithNoTests",
-    "coverage": "cross-env NODE_ENV=test jest src/ --verbose --coverage --passWithNoTests && codecov",
     "build": "npx babel src --out-dir dist --ignore **/*.test.js"
   },
   "jest": {
