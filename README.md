@@ -39,7 +39,7 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm ci
+        run: npm i --no-audit --no-package-lock --no-optional
       - name: Run Linter
         run: npm run lint
 
@@ -53,7 +53,7 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm ci
+        run: npm i --no-audit --no-package-lock --no-optional
       - name: Run Unit Tests
         run: npm run test:cov
 
@@ -69,7 +69,7 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm ci
+        run: npm i --no-audit --no-package-lock --no-optional
       - name: Run Build
         run: npm run build
 ```
@@ -101,7 +101,7 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm ci
+        run: npm i --no-audit --no-package-lock --no-optional
       - name: Run Linter
         run: npm run lint
 
@@ -116,7 +116,7 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm ci
+        run: npm i --no-audit --no-package-lock --no-optional
       - name: Run Unit Tests
         run: npm run test:cov
 
@@ -134,7 +134,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@belsrc'
       - name: Install Packages
-        run: npm ci
+        run: npm i --no-audit --no-package-lock --no-optional
       - name: Run Build
         run: npm run build
       - name: Publish Package @ Github
@@ -154,7 +154,7 @@ jobs:
   #         node-version: 10
   #         registry-url: https://registry.npmjs.org/
   #         scope: '@belsrc'
-  #     - run: npm ci
+  #     - run: npm i --no-audit --no-package-lock --no-optional
   #     - name: Publish Package @ NPM
   #       run: npm publish
   #       env:
@@ -182,4 +182,30 @@ jobs:
     ./cc-test-reporter upload-coverage
   env:
     CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+```
+
+#### Yarn Use
+
+So far Ive only been able to find one Yarn action. And while using you that you dont have acess to `npm run` so one would need to use the node action as well.
+
+```yml
+- name: Setup Node
+  uses: actions/setup-node@v1
+  with:
+    node-version: 10
+- name: Install Packages
+  uses: Borales/actions-yarn@v2.0.1
+  with:
+    cmd: install
+```
+
+All that being said, its actually significantly faster to just use `npm install` (as you cant use `npm ci` unless you have a package-lock)
+
+```yml
+- name: Setup Node
+  uses: actions/setup-node@v1
+  with:
+    node-version: 10
+- name: Install Packages
+  run: npm i --no-audit --no-package-lock --no-optional
 ```
