@@ -26,14 +26,14 @@ jobs:
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
       - name: Install Packages
-        uses: Borales/actions-yarn@v2.0.1
-        with:
-          cmd: install
+        run: npm i --no-audit --no-package-lock --no-optional
       - name: Run Linter
-        uses: Borales/actions-yarn@v2.0.1
-        with:
-          cmd: run lint
+        run: npm run lint
 
   # Run all of the unit tests
   test:
@@ -41,14 +41,14 @@ jobs:
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
       - name: Install Packages
-        uses: Borales/actions-yarn@v2.0.1
-        with:
-          cmd: install
+        run: npm i --no-audit --no-package-lock --no-optional
       - name: Run Unit Tests
-        uses: Borales/actions-yarn@v2.0.1
-        with:
-          cmd: run test:cov
+        run: npm run coverage
       - name: Upload coverage to CodeClimate
         run: |
           export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
@@ -67,9 +67,13 @@ jobs:
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
-      - name: Install Packages
-        uses: Borales/actions-yarn@v2.0.1
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
-          cmd: install
+          node-version: 10
+          registry-url: https://npm.pkg.github.com/
+          scope: '@belsrc'
+      - name: Install Packages
+        run: npm i --no-audit --no-package-lock --no-optional
       - name: Run Build
         run: npm run build

@@ -186,26 +186,17 @@ jobs:
 
 #### Yarn Use
 
-So far Ive only been able to find one Yarn action. And while using you that you dont have acess to `npm run` so one would need to use the node action as well.
+For Yarn you will need to use an Action from the marketplace, Borales/actions-yarn.
 
 ```yml
-- name: Setup Node
-  uses: actions/setup-node@v1
-  with:
-    node-version: 10
 - name: Install Packages
   uses: Borales/actions-yarn@v2.0.1
   with:
     cmd: install
-```
-
-All that being said, its actually significantly faster to just use `npm install` (as you cant use `npm ci` unless you have a package-lock)
-
-```yml
-- name: Setup Node
-  uses: actions/setup-node@v1
+- name: Run Linter
+  uses: Borales/actions-yarn@v2.0.1
   with:
-    node-version: 10
-- name: Install Packages
-  run: npm i --no-audit --no-package-lock --no-optional
+    cmd: run lint
 ```
+
+Though, admittedly, I've found it easier to just use npm for most of the actions.

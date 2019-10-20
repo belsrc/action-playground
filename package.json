@@ -22,7 +22,7 @@
     "test": "cross-env NODE_ENV=test jest src/ --verbose --passWithNoTests",
     "test:changed": "cross-env NODE_ENV=test jest src/ -o --passWithNoTests",
     "test:changed-silent": "cross-env NODE_ENV=test jest src/ -o --silent --passWithNoTests",
-    "test:cov": "cross-env NODE_ENV=test jest src/ --verbose --coverage --passWithNoTests",
+    "coverage": "cross-env NODE_ENV=test jest src/ --verbose --coverage --passWithNoTests",
     "build": "npx babel src --out-dir dist --ignore **/*.test.js"
   },
   "jest": {
