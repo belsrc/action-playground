@@ -39,7 +39,7 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm i --no-audit --no-package-lock --no-optional
+        run: npm ci
       - name: Run Linter
         run: npm run lint
 
@@ -53,9 +53,9 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm i --no-audit --no-package-lock --no-optional
+        run: npm ci
       - name: Run Unit Tests
-        run: npm run test:cov
+        run: npm run coverage
 
   # If `lint` and `test` pass (this is the `needs` line)
   # then check the actual compiling
@@ -69,7 +69,7 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm i --no-audit --no-package-lock --no-optional
+        run: npm ci
       - name: Run Build
         run: npm run build
 ```
@@ -83,11 +83,11 @@ name: publish
 # You can also use
 #  release:
 #    types: [published]
-# But this requires you to manual make a new release from Github
+# But this requires you to make a new release from Github
 on:
   push:
     tags:
-      - v*
+      - v*.*.*
 
 jobs:
   # Run ESLint over the code base
@@ -101,7 +101,7 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm i --no-audit --no-package-lock --no-optional
+        run: npm ci
       - name: Run Linter
         run: npm run lint
 
@@ -116,7 +116,7 @@ jobs:
         with:
           node-version: 10
       - name: Install Packages
-        run: npm i --no-audit --no-package-lock --no-optional
+        run: npm ci
       - name: Run Unit Tests
         run: npm run test:cov
 
@@ -134,13 +134,18 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@belsrc'
       - name: Install Packages
-        run: npm i --no-audit --no-package-lock --no-optional
+        run: npm ci
       - name: Run Build
         run: npm run build
       - name: Publish Package @ Github
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   # # If `lint` and `test` pass, build and publish to NPM Pkg Reg
   # publish-npm:
   #   needs: build
@@ -154,7 +159,7 @@ jobs:
   #         node-version: 10
   #         registry-url: https://registry.npmjs.org/
   #         scope: '@belsrc'
-  #     - run: npm i --no-audit --no-package-lock --no-optional
+  #     - run: npm ci
   #     - name: Publish Package @ NPM
   #       run: npm publish
   #       env:
@@ -201,7 +206,7 @@ For Yarn you will need to use an Action from the marketplace, Borales/actions-ya
 
 Though, admittedly, I've found it easier to just use npm for most of the actions.
 
-**Edit:** It's actually easier, will less odd behavior, to just use a kind of hybrid (explicit) approach instead of above Yarn action.
+**Edit:** It's actually easier, with less odd behavior, to just use an explicit approach instead of the above Yarn action.
 
 ```yml
 lint:
