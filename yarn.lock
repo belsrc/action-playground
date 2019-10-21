@@ -2291,10 +2291,10 @@ eslint-ast-utils@^1.0.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-belsrc@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-belsrc/-/eslint-config-belsrc-1.1.0.tgz#96df3ab4506e2b2e66aa58c6714c9cb0b596883d"
-  integrity sha512-OBlCVc27sHgqkwgyg6NQznx68nh0lZjld3kjxTSUF/xzzsj+yUs6pIMh2u1TSfAO9rfzFvpdhBH18RIB74+SvQ==
+eslint-config-belsrc@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-config-belsrc/-/eslint-config-belsrc-1.1.2.tgz#b2186d0feee5010d6107dacea000b8e36b642aa9"
+  integrity sha512-ljbYcaIsvlg4/oEYmO7tSpTeqFzwYyQv+Ey8kZSPptX2VWs+grBD7AQIbGud0hiqovwZpoFS/X/yl/T481D++Q==
   dependencies:
     babel-eslint "^10.0.0"
     eslint-plugin-fp-jxl "^3.1.0"
