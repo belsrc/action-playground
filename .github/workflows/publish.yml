@@ -29,10 +29,12 @@ jobs:
         run: yarn run prettier
       - name: Run Linter
         run: yarn run lint
-      - name: Extract Branch Name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+      # If it is a tag push, the ref is the tag, not the branch
+      # For this one, I could just use master
+      # - name: Extract Branch Name
+      #   shell: bash
+      #   run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      #   id: extract_branch
       - name: Count Changed Files
         shell: bash
         run: echo "##[set-output name=count;]$(git status -s -uno | wc -l)"
@@ -48,7 +50,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ steps.extract_branch.outputs.branch }}
+          branch: master
 
   # Run all of the unit tests
   test:
