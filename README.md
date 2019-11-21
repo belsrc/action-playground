@@ -224,3 +224,40 @@ lint:
     - name: Run Linter
       run: yarn run lint
 ```
+
+#### Commiting Action changes
+
+If you want to back commit any changes that occured in the actions (linting/prettier) you can use the `ad-m/github-push-action` action.
+In order to use it on branches dynamically, you will also need to pull out the branch name from the ref.
+
+```yml
+clean:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Git Checkout
+      uses: actions/checkout@v1
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10
+    - name: Install Packages
+      run: npm ci
+    - name: Run Prettier
+      run: npm run prettier
+    - name: Run Linter
+      run: npm run lint
+    - name: Extract Branch Name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+    - name: Commit Files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "style: prettier & eslint changes" -a
+    - name: Push Changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ steps.extract_branch.outputs.branch }}
+```
