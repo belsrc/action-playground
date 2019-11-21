@@ -1,6 +1,6 @@
 {
   "name": "@belsrc/action-playground",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "JS Project Template",
   "main": "dist/index.js",
   "files": [
