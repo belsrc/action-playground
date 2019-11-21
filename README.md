@@ -263,6 +263,7 @@ clean:
         git config --local user.name "GitHub Action"
         git commit -m "style: prettier & eslint changes" -a --no-verify
     - name: Push Changes
+      if: steps.changed_count.outputs.count > 0
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
