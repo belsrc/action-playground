@@ -254,7 +254,7 @@ clean:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git commit -m "style: prettier & eslint changes" -a
+        git commit -m "style: prettier & eslint changes" -a --no-verify
     - name: Push Changes
       uses: ad-m/github-push-action@master
       with:
