@@ -232,6 +232,7 @@ In order to use it on branches dynamically, you will also need to pull out the b
 It would probably also be a good idea to check to see if any files were actually modified in the previous step.
 This will avoid the "nothing to commit, working tree clean" if you try to commit nothing.
 If it doesn't need to be dynamic, you can remove the `Extract Branch Name` step and hard code the `branch` in the `Push Changes` step.
+[Example Commit](https://github.com/belsrc/action-playground/commit/0a7ac2ad1b9449f32704e508c0189255f71706a5)
 
 ```yml
 clean:
