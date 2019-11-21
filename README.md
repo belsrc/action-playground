@@ -229,6 +229,8 @@ lint:
 
 If you want to back commit any changes that occured in the actions (linting/prettier) you can use the `ad-m/github-push-action` action.
 In order to use it on branches dynamically, you will also need to pull out the branch name from the ref.
+It would probably also be a good idea to check to see if any files were actually modified in the previous step.
+This will avoid the "nothing to commit, working tree clean" if you try to commit nothing.
 
 ```yml
 clean:
@@ -250,7 +252,12 @@ clean:
       shell: bash
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
+    - name: Count Changed Files
+      shell: bash
+      run: echo "##[set-output name=count;]$(git status -s -uno | wc -l)"
+      id: changed_count
     - name: Commit Files
+      if: steps.changed_count.outputs.count > 0
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
