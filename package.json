@@ -48,7 +48,7 @@
     "@babel/cli": "7.6.4",
     "@babel/core": "7.6.4",
     "@babel/preset-env": "7.6.3",
-    "@babel/register": "7.6.2",
+    "@babel/register": "7.7.4",
     "@commitlint/cli": "8.2.0",
     "@commitlint/config-conventional": "8.2.0",
     "babel-eslint": "10.0.3",
