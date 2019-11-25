@@ -56,8 +56,8 @@ jobs:
         uses: azure/CLI@v1
         env:
           ACCOUNT_NAME: belsrcdemo
-          SOURCE_DIR: dist/
-          DEST_DIR: resources/action-playground/master
+          SOURCE_DIR: 'dist/'
+          DEST_DIR: 'resources/action-playground/master'
         with:
           azcliversion: latest
           inlineScript: |
