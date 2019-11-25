@@ -233,6 +233,7 @@ It would probably also be a good idea to check to see if any files were actually
 This will avoid the "nothing to commit, working tree clean" if you try to commit nothing.
 If it doesn't need to be dynamic, you can remove the `Extract Branch Name` step and hard code the `branch` in the `Push Changes` step.
 [Example Commit](https://github.com/belsrc/action-playground/commit/0a7ac2ad1b9449f32704e508c0189255f71706a5)
+[Action Ouput](https://github.com/belsrc/action-playground/commit/586edfe1eeeea2fa92ffacef86a35e7f033acfb6/checks?check_suite_id=328143331)
 
 ```yml
 clean:
@@ -251,13 +252,17 @@ clean:
     - name: Run Linter
       run: npm run lint
     - name: Extract Branch Name
-      shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      id: extract_branch
+        shell: bash
+        run: |
+          echo ${GITHUB_REF#refs/heads/}
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
     - name: Count Changed Files
-      shell: bash
-      run: echo "##[set-output name=count;]$(git status -s -uno | wc -l)"
-      id: changed_count
+        shell: bash
+        run: |
+          git status -s -uno | wc -l
+          echo "##[set-output name=count;]$(git status -s -uno | wc -l)"
+        id: changed_count
     - name: Commit Files
       if: steps.changed_count.outputs.count > 0
       run: |
