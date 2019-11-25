@@ -326,3 +326,57 @@ clean:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: ${{ steps.extract_branch.outputs.branch }}
 ```
+
+#### Azure Blob Deploy (Based on branch)
+
+As there's not currently a specific action for Blob transfers, you'll need to use the azure/cli action. You'll need deployment credentials for the log in ([Noted here](https://github.com/Azure/login#configure-deployment-credentials) and addditional info [here](https://docs.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions). Can use the "Try It" shell there too)
+
+```yml
+env:
+  ACCOUNT_NAME: <storage account name>
+  SOURCE_DIR: dist/
+  DEST_DIR: <path/in/storage>
+  # No trailing slash
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+
+      - name: Install Yarn
+        run: npm i -g yarn
+
+      - name: Install Packages
+        run: yarn install
+
+      - name: Run Build
+        run: yarn run build
+
+      # Branch name so if can be used as a sub-directory
+      - name: Extract Branch Name
+        shell: bash
+        run: |
+          echo ${GITHUB_REF#refs/heads/}
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS  }}
+
+      # Use the DEST_DIR + branch name to make complete path
+      - name: Azure CLI Copy Artifacts
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} -s ${{ env.SOURCE_DIR }} -d '${{ env.DEST_DIR }}/${{ steps.extract_branch.outputs.branch }}'
+```
