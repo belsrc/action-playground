@@ -10,7 +10,7 @@ on:
 env:
   ACCOUNT_NAME: belsrcdemo
   SOURCE_DIR: dist/
-  DEST_DIR: resources/action-playground/master
+  DEST_DIR: resources/action-playground
 
 jobs:
   # Run ESLint over the code base
@@ -65,5 +65,5 @@ jobs:
             echo '${{ env.ACCOUNT_NAME }}'
             echo '${{ env.SOURCE_DIR }}'
             echo '${{ env.DEST_DIR }}'
-            echo '${{ secrets.TESTING }}'
+            echo '${{ env.DEST_DIR }}/${{ steps.extract_branch.outputs.branch }}'
             az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} -s ${{ env.SOURCE_DIR }} -d ${{ env.DEST_DIR }} --dryrun
