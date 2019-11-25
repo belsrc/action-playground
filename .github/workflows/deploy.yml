@@ -59,4 +59,4 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch --account-name ${{env.ACCOUNT_NAME}} -s ${{SOURCE_DIR}} -d ${{DEST_DIR}} --dryrun
+            az storage blob upload-batch --account-name $(echo ${env.ACCOUNT_NAME}) -s $(echo ${SOURCE_DIR}) -d $(echo ${DEST_DIR}) --dryrun
