@@ -15,7 +15,7 @@ jobs:
   # test:
 
   deploy:
-    #needs: [test, lint]
+    # needs: [test, lint]
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
@@ -49,13 +49,14 @@ jobs:
 
       # https://docs.microsoft.com/en-us/cli/azure/storage/blob?view=azure-cli-latest#az-storage-blob-upload-batch
       # az storage blob upload-batch --account-name ${env.ACCOUNT_NAME} -s ${SOURCE_DIR} -d ${DEST_DIR} --dryrun
+      # az storage blob upload-batch --account-name belsrcdemo -s dist/ -d resources/action-playground/master --dryrun
       - name: Azure CLI Copy Artifacts
         uses: azure/CLI@v1
-        # env:
-        #   ACCOUNT_NAME: belsrcdemo
-        #   SOURCE_DIR: dist/
-        #   DEST_DIR: $(resources/action-playground/${steps.extract_branch.outputs.branch})
+        env:
+          ACCOUNT_NAME: belsrcdemo
+          SOURCE_DIR: dist/
+          DEST_DIR: $(resources/action-playground/${{steps.extract_branch.outputs.branch}})
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch --account-name belsrcdemo -s dist/ -d resources/action-playground/master --dryrun
+            az storage blob upload-batch --account-name ${{env.ACCOUNT_NAME}} -s ${{SOURCE_DIR}} -d ${{DEST_DIR}} --dryrun
