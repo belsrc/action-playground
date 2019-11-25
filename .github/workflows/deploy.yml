@@ -51,11 +51,11 @@ jobs:
       # az storage blob upload-batch --account-name ${env.ACCOUNT_NAME} -s ${SOURCE_DIR} -d ${DEST_DIR} --dryrun
       - name: Azure CLI Copy Artifacts
         uses: azure/CLI@v1
-        env:
-          ACCOUNT_NAME: belsrcdemo
-          SOURCE_DIR: dist/
-          DEST_DIR: $(resources/action-playground/${steps.extract_branch.outputs.branch})
+        # env:
+        #   ACCOUNT_NAME: belsrcdemo
+        #   SOURCE_DIR: dist/
+        #   DEST_DIR: $(resources/action-playground/${steps.extract_branch.outputs.branch})
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch --account-name ${env.ACCOUNT_NAME} -s ${SOURCE_DIR} -d ${DEST_DIR} --dryrun
+            az storage blob upload-batch --account-name belsrcdemo -s dist/ -d resources/action-playground/master --dryrun
