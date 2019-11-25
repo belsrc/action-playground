@@ -17,6 +17,9 @@ on:
     paths-ignore:
       - 'docs/**'
       - '**.md'
+      - '.github/workflows/deploy.yml'
+      - '.github/workflows/clean.yml'
+      - '.github/workflows/publish.yml'
 
 jobs:
   # If the job does NOT have any `needs` jobs, then they are ran in parallel

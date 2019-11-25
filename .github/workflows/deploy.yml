@@ -54,6 +54,7 @@ jobs:
       # DEST_DIR: $(resources/action-playground/${{steps.extract_branch.outputs.branch}})
       - name: Azure CLI Copy Artifacts
         uses: azure/CLI@v1
+        shell: bash
         env:
           ACCOUNT_NAME: belsrcdemo
           SOURCE_DIR: dist/
