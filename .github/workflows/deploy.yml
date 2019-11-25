@@ -61,6 +61,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            echo ${{ toJSON(env) }}
             echo ${{ env.ACCOUNT_NAME }}
             echo ${{ env.ACCOUNT_NAME }}
             echo ${{ env.ACCOUNT_NAME }}
