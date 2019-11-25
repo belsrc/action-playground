@@ -32,7 +32,9 @@ jobs:
         id: extract_branch
       - name: Count Changed Files
         shell: bash
-        run: echo "##[set-output name=count;]$(git status -s -uno | wc -l)"
+        run: |
+          git status -s -uno | wc -l
+          echo "##[set-output name=count;]$(git status -s -uno | wc -l)"
         id: changed_count
       - name: Commit Files
         if: steps.changed_count.outputs.count > 0
