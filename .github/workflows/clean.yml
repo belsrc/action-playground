@@ -11,7 +11,7 @@ on:
       - '.github/**'
 
 jobs:
-  build:
+  clean:
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
@@ -28,7 +28,9 @@ jobs:
         run: yarn run clean
       - name: Extract Branch Name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        run: |
+          echo ${GITHUB_REF#refs/heads/}
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
       - name: Count Changed Files
         shell: bash
