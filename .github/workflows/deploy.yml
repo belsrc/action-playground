@@ -1,0 +1,57 @@
+name: deploy
+
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  # Run ESLint over the code base
+  # lint:
+
+  # Run all of the unit tests
+  # test:
+
+  deploy:
+    needs: [test, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+
+      - name: Install Yarn
+        run: npm i -g yarn
+
+      - name: Install Packages
+        run: yarn install
+
+      - name: Extract Branch Name
+        shell: bash
+        run: |
+          echo ${GITHUB_REF#refs/heads/}
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS  }}
+
+      # https://docs.microsoft.com/en-us/cli/azure/storage/blob?view=azure-cli-latest#az-storage-blob-upload-batch
+      - name: Azure CLI Copy Artifacts
+        uses: azure/CLI@v1
+        env:
+          ACCOUNT_NAME: belsrcdemo
+          SOURCE_DIR: dist
+          DEST_DIR: resources/action-playground/${ steps.extract_branch.outputs.branch }
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch --account-name ${ env.ACCOUNT_NAME } -s ${ SOURCE_DIR } -d ${ DEST_DIR } --dryrun
