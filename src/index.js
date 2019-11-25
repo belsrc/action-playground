@@ -1,5 +1,3 @@
-export const add = a => b => a + b;
-
-export const subtract = a => b => a - b;
-
-export const multiply = a => b => a * b;
+export { default as add } from './add';
+export { default as subtract } from './subtract';
+export { default as multiplyadd } from './multiply';
