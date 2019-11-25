@@ -48,7 +48,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS  }}
 
       # https://docs.microsoft.com/en-us/cli/azure/storage/blob?view=azure-cli-latest#az-storage-blob-upload-batch
-      # az storage blob upload-batch --account-name ${env.ACCOUNT_NAME} -s ${env.SOURCE_DIR} -d ${DEST_DIR} --dryrun
+      # az storage blob upload-batch --account-name ${env.ACCOUNT_NAME} -s ${env.SOURCE_DIR} -d ${env.DEST_DIR} --dryrun
       # az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} -s ${{ env.SOURCE_DIR }} -d ${{ env.DEST_DIR }} --dryrun
       # az storage blob upload-batch --account-name belsrcdemo -s dist/ -d resources/action-playground/master --dryrun
       # DEST_DIR: $(resources/action-playground/${{steps.extract_branch.outputs.branch}})
@@ -61,4 +61,4 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az storage blob upload-batch --account-name ${env.ACCOUNT_NAME} -s ${env.SOURCE_DIR} -d ${env.DEST_DIR} --dryrun
+            az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} -s "${{ env.SOURCE_DIR }}" -d "${{ env.DEST_DIR }}" --dryrun
