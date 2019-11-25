@@ -16,34 +16,42 @@ jobs:
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 10
+
       - name: Install Yarn
         run: npm i -g yarn
+
       - name: Install Packages
         run: yarn install
+
       - name: Run Prettier & ESLint
         run: yarn run clean
+
       - name: Extract Branch Name
         shell: bash
         run: |
           echo ${GITHUB_REF#refs/heads/}
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
+
       - name: Count Changed Files
         shell: bash
         run: |
           git status -s -uno | wc -l
           echo "##[set-output name=count;]$(git status -s -uno | wc -l)"
         id: changed_count
+
       - name: Commit Files
         if: steps.changed_count.outputs.count > 0
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "style: prettier & eslint changes" -a --no-verify
+
       - name: Push Changes
         if: steps.changed_count.outputs.count > 0
         uses: ad-m/github-push-action@master

@@ -31,13 +31,17 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Git Checkout
+        uses: actions/checkout@v1
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 10
+
       - name: Install Packages
         run: npm ci
+
       - name: Run Linter
         run: npm run lint
 
@@ -45,13 +49,17 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Git Checkout
+        uses: actions/checkout@v1
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 10
+
       - name: Install Packages
         run: npm ci
+
       - name: Run Unit Tests
         run: npm run coverage
 
@@ -61,13 +69,17 @@ jobs:
     needs: [test, lint]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Git Checkout
+        uses: actions/checkout@v1
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 10
+
       - name: Install Packages
         run: npm ci
+
       - name: Run Build
         run: npm run build
 ```
@@ -94,12 +106,15 @@ jobs:
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 10
+
       - name: Install Packages
         run: npm ci
+
       - name: Run Linter
         run: npm run lint
 
@@ -109,12 +124,15 @@ jobs:
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 10
+
       - name: Install Packages
         run: npm ci
+
       - name: Run Unit Tests
         run: npm run test:cov
 
@@ -125,42 +143,60 @@ jobs:
     steps:
       - name: Git Checkout
         uses: actions/checkout@v1
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 10
           registry-url: https://npm.pkg.github.com/
           scope: '@belsrc'
+
       - name: Install Packages
         run: npm ci
+
       - name: Run Build
         run: npm run build
+
       - name: Publish Package @ Github
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
       - name: Create Release
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  # # If `lint` and `test` pass, build and publish to NPM Pkg Reg
+
+  # # Publish to NPM Pkg Reg
   # publish-npm:
-  #   needs: build
+  #   needs: [test, lint]
   #   runs-on: ubuntu-latest
   #   steps:
   #     - name: Git Checkout
   #       uses: actions/checkout@v1
+  #
   #     - name: Setup Node
   #       uses: actions/setup-node@v1
   #       with:
   #         node-version: 10
-  #         registry-url: https://registry.npmjs.org/
+  #         registry-url: https://npm.pkg.github.com/
   #         scope: '@belsrc'
-  #     - run: npm ci
+  #
+  #     - name: Install Packages
+  #       run: npm ci
+  #
+  #     - name: Run Build
+  #       run: npm run build
+  #
   #     - name: Publish Package @ NPM
   #       run: npm publish
   #       env:
   #         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+  #
+  #     - name: Create Release
+  #       uses: softprops/action-gh-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 #### Addition to Test Job for CodeCov Reports
@@ -195,6 +231,7 @@ For Yarn you will need to use an Action from the marketplace, Borales/actions-ya
   uses: Borales/actions-yarn@v2.0.1
   with:
     cmd: install
+
 - name: Run Linter
   uses: Borales/actions-yarn@v2.0.1
   with:
@@ -211,14 +248,18 @@ lint:
   steps:
     - name: Git Checkout
       uses: actions/checkout@v1
+
     - name: Setup Node
       uses: actions/setup-node@v1
       with:
         node-version: 10
+
     - name: Install Yarn
       run: npm i -g yarn
+
     - name: Install Packages
       run: yarn install
+
     - name: Run Linter
       run: yarn run lint
 ```
@@ -230,8 +271,12 @@ In order to use it on branches dynamically, you will also need to pull out the b
 It would probably also be a good idea to check to see if any files were actually modified in the previous step.
 This will avoid the "nothing to commit, working tree clean" if you try to commit nothing.
 If it doesn't need to be dynamic, you can remove the `Extract Branch Name` step and hard code the `branch` in the `Push Changes` step.
+
 [Example Commit](https://github.com/belsrc/action-playground/commit/0a7ac2ad1b9449f32704e508c0189255f71706a5)
-[Action Ouput](https://github.com/belsrc/action-playground/commit/586edfe1eeeea2fa92ffacef86a35e7f033acfb6/checks?check_suite_id=328143331)
+
+[Action Ouput With Change Files](https://github.com/belsrc/action-playground/commit/586edfe1eeeea2fa92ffacef86a35e7f033acfb6/checks?check_suite_id=328143331)
+
+[Action Output When Theres Nothing Changed](https://github.com/belsrc/action-playground/commit/ea8042bd61ee3c373a7e84157395711822958ad7/checks?check_suite_id=328154873)
 
 ```yml
 clean:
@@ -239,34 +284,42 @@ clean:
   steps:
     - name: Git Checkout
       uses: actions/checkout@v1
+
     - name: Setup Node
       uses: actions/setup-node@v1
       with:
         node-version: 10
+
     - name: Install Packages
       run: npm ci
+
     - name: Run Prettier
       run: npm run prettier
+
     - name: Run Linter
       run: npm run lint
+
     - name: Extract Branch Name
         shell: bash
         run: |
           echo ${GITHUB_REF#refs/heads/}
           echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
+
     - name: Count Changed Files
         shell: bash
         run: |
           git status -s -uno | wc -l
           echo "##[set-output name=count;]$(git status -s -uno | wc -l)"
         id: changed_count
+
     - name: Commit Files
       if: steps.changed_count.outputs.count > 0
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git commit -m "style: prettier & eslint changes" -a --no-verify
+
     - name: Push Changes
       if: steps.changed_count.outputs.count > 0
       uses: ad-m/github-push-action@master
