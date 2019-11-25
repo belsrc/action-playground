@@ -166,7 +166,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   # # Publish to NPM Pkg Reg
   # publish-npm:
   #   needs: [test, lint]
