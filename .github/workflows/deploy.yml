@@ -44,8 +44,9 @@ jobs:
         shell: bash
         run: |
           echo ${GITHUB_REF#refs/heads/}
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/} | sed "s/[\.\/\\:]/_/g")"
         id: extract_branch
+        # need to string replace all /\:. with _
 
       - name: Azure Login
         uses: azure/login@v1
