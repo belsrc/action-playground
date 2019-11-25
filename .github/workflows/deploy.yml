@@ -15,7 +15,7 @@ jobs:
   # test:
 
   deploy:
-    needs: [test, lint]
+    #needs: [test, lint]
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
