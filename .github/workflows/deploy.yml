@@ -61,8 +61,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            echo ${{ toJSON(env) }}
-            echo ${{ env.ACCOUNT_NAME }}
-            echo ${{ env.ACCOUNT_NAME }}
-            echo ${{ env.ACCOUNT_NAME }}
-            az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} -s ${{ env.ACCOUNT_NAME }} -d ${{ env.ACCOUNT_NAME }} --dryrun
+            echo $ACCOUNT_NAME
+            echo $SOURCE_DIR
+            echo $DEST_DIR
+            az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} -s ${{ env.SOURCE_DIR }} -d ${{ env.DEST_DIR }} --dryrun
