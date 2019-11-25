@@ -61,8 +61,9 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
+            readlink -f $(which sh)
             echo ${env.ACCOUNT_NAME}
             echo ${env.SOURCE_DIR}
-            echo ${env.DEST_DIR }}
+            echo ${env.DEST_DIR}
             echo ${secrets.TESTING}
             az storage blob upload-batch --account-name ${{ env.ACCOUNT_NAME }} -s ${{ env.SOURCE_DIR }} -d ${{ env.DEST_DIR }} --dryrun
