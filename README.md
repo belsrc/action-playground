@@ -350,21 +350,19 @@ jobs:
         with:
           node-version: 10
 
-      - name: Install Yarn
-        run: npm i -g yarn
-
       - name: Install Packages
-        run: yarn install
+        run: npm ci
 
       - name: Run Build
-        run: yarn run build
+        run: npm run build
 
       # Branch name so if can be used as a sub-directory
+      # Replace some annoying characters, for various reasons
       - name: Extract Branch Name
         shell: bash
         run: |
-          echo ${GITHUB_REF#refs/heads/}
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo ${GITHUB_REF#refs/heads/} | sed "s/[\.\/\\:]/_/g"
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/} | sed "s/[\.\/\\:]/_/g")"
         id: extract_branch
 
       - name: Azure Login
