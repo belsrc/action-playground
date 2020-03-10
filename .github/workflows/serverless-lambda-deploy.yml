@@ -1,0 +1,35 @@
+# This action deploys serverless applications built using the serverless web framework.
+# This example assumes infrastructure powered by AWS Lambda
+
+name: Serverless Deployment - AWS Lambda
+
+# Triggers the action every time there is a code push to the master branch, includes merges
+on:
+  push:
+    branches:
+      - master
+
+# Specify what jobs to run
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    # Setup environmental variables for serverless deployment
+    # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are required
+    # All other config values are defined in serverless.yml in the root dir
+    env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    steps:
+      # Use github default action to trigger action in this repo. Mandatory
+      # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#using-the-checkout-action
+      - uses: actions/checkout@v1 
+
+      - name: npm install dependencies
+        run: npm install
+        
+      - name: Serverless
+        uses: serverless/github-action@v1.53.0
+        with:
+          args: deploy
