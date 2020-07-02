@@ -1,11 +1,10 @@
 name: deploy
 
+# Trigger the deploy on tag pushes
 on:
   push:
-    branches-ignore:
-      - 'dependabot/**'
-    paths-ignore:
-      - '**.md'
+    tags:
+      - v*.*.*
 
 env:
   ACCOUNT_NAME: belsrcdemo

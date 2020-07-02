@@ -13,23 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Git Checkout
-        uses: actions/checkout@v1
-
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10
-
-      - name: Install Yarn
-        run: npm i -g yarn
-
-      - name: Install Packages
-        run: yarn install
+        uses: actions/checkout@v2
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
-        with:
-          languages: javascript
+        # with:
+        #   languages: javascript
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1

@@ -3,11 +3,11 @@
 
 name: Serverless Deployment - AWS Lambda
 
-# Triggers the action every time there is a code push to the master branch, includes merges
+# Trigger the deploy on tag pushes
 on:
   push:
-    branches:
-      - master
+    tags:
+      - v*.*.*
 
 # Specify what jobs to run
 jobs:
@@ -24,11 +24,11 @@ jobs:
     steps:
       # Use github default action to trigger action in this repo. Mandatory
       # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#using-the-checkout-action
-      - uses: actions/checkout@v1 
+      - uses: actions/checkout@v1
 
       - name: npm install dependencies
         run: npm install
-        
+
       - name: Serverless
         uses: serverless/github-action@v1.53.0
         with:
