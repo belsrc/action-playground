@@ -1,6 +1,4 @@
 module.exports = {
   extends: ['eslint-config-belsrc'],
-  rules: {
-    'fp/no-this': 0,
-  },
+  rules: { 'fp/no-this': 0 },
 };
