@@ -1,0 +1,35 @@
+name: codeql-check
+
+on:
+  # trigger on branch push
+  # only trigger on pushes to the `master` and `develop` branches (this also means PR merges)
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+
+      - name: Install Yarn
+        run: npm i -g yarn
+
+      - name: Install Packages
+        run: yarn install
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: javascript
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
