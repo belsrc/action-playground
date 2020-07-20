@@ -54,7 +54,7 @@
     "babel-eslint": "10.1.0",
     "codecov": "3.7.0",
     "cross-env": "7.0.2",
-    "eslint": "7.3.1",
+    "eslint": "7.5.0",
     "eslint-config-belsrc": "1.1.2",
     "jest": "24.9.0",
     "npm-check": "5.9.2",
